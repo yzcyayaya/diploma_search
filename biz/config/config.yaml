@@ -1,0 +1,7 @@
+server:
+  port: 5000
+  name: diploma_search
+meilisearch:
+  host: localhost
+  port: 7700
+  apikey:

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一切为了检索</title>
+
+    <link rel="shortcut icon" href="static/img/home.svg" type="image/x-icon">
+
+    <!-- css 文件 -->
+    <link rel="stylesheet" href="static/css/foundation.min.css">
+    <link rel="stylesheet" href="static/css/layui.css" media="all">
+
+    <!-- jQuery 库 -->
+    <script src="static/js/jquery.min.js"></script>
+
+    <!-- JavaScript 文件 -->
+    <script src="static/js/foundation.min.js"></script>
+    <script src="static/js/modernizr.js"></script>
+    <script src="static/js/layui.js" charset="utf-8"></script>
+
+    <style>
+        .center {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            width: 100%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        .grammar-text-letf {
+            text-align: left
+        }
+
+        .grammar-text-right {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#" data-dropdown="id01" class="button dropdown success tiny">设置</a>
+    <ul id="id01" data-dropdown-content class="f-dropdown tiny">
+        <li>
+            <a id="grammar">搜索引擎语法</a>
+        </li>
+        <li><a>关于</a></li>
+    </ul>
+    <div class="center">
+        <form>
+            <div class="row">
+                <div class="large-10 columns">
+                    <div class="row collapse postfix-round">
+                        <div class="small-11 columns">
+                            <input id="keyword" type="text" placeholder="你知道的,一切为了检索。">
+                        </div>
+                        <div class="small-1 columns">
+                            <a id="go-search" class="button postfix info">{[{.value}]}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $(document).foundation();
+        })
+        //随机背景图  通过模板引擎渲染
+        document.body.style.background = "url(" + "{[{.imgUrl}]}" + ") no-repeat";
+        //背景图占满
+        document.body.style.backgroundSize = "100% 100%"
+
+        //监听点击事件
+        $("#go-search").click(
+            function () {
+                var keyword = $("#keyword").val();
+
+                console.log(keyword)
+                //跳转
+                window.location = "/search?q=" + keyword;
+            }
+        );
+
+        $('#grammar').on('click', function () {
+            layer.open({
+                type: 1,
+                title: false,
+                content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">' +
+                    '<b>指令: (command) + 空格 + (keyword)</b><br><br>' +
+                    '<i class="layui-icon layui-icon-file" style="color: #1E9FFF;"></i>   filetype:(文件类型) &nbsp;<br>' +
+                    '&nbsp;&nbsp;如：filetype:pdf kubernetes权威指南、filetype:dockubernetes权威指南' +
+                    '<br><br>' +
+                    '<i class="layui-icon layui-icon-website" style="color: #1E9FFF;"></i>site:(域名)&nbsp;<br>&nbsp;&nbsp;如: site:m2dd.top' +
+                    '</div>',
+                btn: ["前往google参考", "我已知晓"],
+                // offset: 't', //中上展示
+                closeBtn: 0,
+                id: 'grammar',
+                anim: 1,
+                moveType: 1,
+                btnAlign: 'c',
+                shade: 0.8,
+                move: false,
+                success: function (layero) {
+                    var btn = layero.find('.layui-layer-btn');
+                    btn.find('.layui-layer-btn0').attr({
+                        href: 'https://sites.google.com/view/togetherlearning/learn/digitalliteracy/powersearching'
+                        , target: '_blank'
+                    });
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

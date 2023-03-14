@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{[{.title}]} - 搜索</title>
+  <link rel="shortcut icon" href="static/img/search.svg" type="image/x-icon">
+  <!-- css 文件 -->
+  <link rel="stylesheet" href="static/css/foundation.min.css">
+  <link rel="stylesheet" href="static/css/layui.css" media="all">
+
+  <!-- jQuery 库 -->
+  <script src="static/js/jquery.min.js"></script>
+
+  <!-- JavaScript 文件 -->
+  <script src="static/js/foundation.min.js"></script>
+  <script src="static/js/modernizr.js"></script>
+  <script src="static/js/layui.js" charset="utf-8"></script>
+  <style>
+    @media (max-width: 800px) and (min-width: 400px) {}
+
+    @media (max-width: 4000px) and (min-width: 900px) {
+      .layui-card-header {
+        height: 10%;
+      }
+
+      .layui-card-header .search-hearch {
+        margin-top: 2%;
+        width: 100%;
+        height: 45px;
+        display: flex;
+      }
+
+      .layui-card-header .search-hearch .s1 {
+        text-align: center;
+        flex: 1;
+      }
+
+      .layui-card-header .search-hearch .s2 {
+        flex: 5;
+        display: flex;
+      }
+
+      .layui-card-header .search-hearch .s3 {
+        display: flex;
+        flex: 10;
+      }
+
+      .layui-card-header .search-hearch .s2 .search-input {
+        display: flex;
+        /* border: 1px solid red; */
+        border: 1px solid #ccc !important;
+        padding: 4px;
+        border-radius: 16px !important;
+        /* border-radius: 15%; */
+        width: 100%;
+      }
+
+      .layui-card-header .search-hearch .s2 .search-input i {
+        flex: 1;
+      }
+
+      .layui-card-header .search-hearch .s2 .search-input input {
+        /* display: none; */
+        /* visibility: hidden; */
+        border: none;
+        outline: medium;
+        background-color: rgba(0, 0, 0, 0);
+        /* border-style: none; */
+        box-shadow: 0px 0px 0px 0px;
+        flex: 30;
+      }
+
+      .layui-card-header .search-hearch .s3 .blank {
+        flex: 10;
+      }
+
+      .layui-card-header .search-hearch .s3 .user-dropdown {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="layui-card">
+      <div class="layui-card-header">
+        <div class="search-hearch">
+          <div class="s1">m2搜索</div>
+          <div class="s2">
+            <div class="search-input">
+              <i class="layui-icon layui-icon-search"></i>
+              <input id="keyword" type="text" placeholder="你知道的,一切为了检索。">
+            </div>
+          </div>
+          <div class="s3">
+            <span class="blank"></span>
+            <button class="layui-btn layui-btn-primary user-dropdown">
+              <i class="layui-icon layui-icon-spread-left layui-font-12"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="layui-card-body">
+        <div class="">
+          卡片式面板面板通常用于非白色背景色的主体内<br>
+          从而映衬出边框投影
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    layui.use(['dropdown', 'util', 'layer', 'table'], function () {
+      var dropdown = layui.dropdown
+        , util = layui.util
+        , layer = layui.layer
+        , table = layui.table;
+      dropdown.render({
+        elem: '.user-dropdown'
+        , data: [{
+          title: 'menu item11'
+          , id: 100
+        }, {
+          title: 'menu item22'
+          , id: 101
+        }, {
+          title: 'menu item33'
+          , id: 102
+        }]
+        , click: function (obj) {
+          layer.tips('点击了：' + obj.title, this.elem, { tips: [1, '#5FB878'] })
+        }
+      });
+    })
+
+  </script>
+</body>
+
+</html>
