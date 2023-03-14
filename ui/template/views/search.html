@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{[{.title}]} - 搜索</title>
+  <title>{[{.keyword}]} - 搜索</title>
   <link rel="shortcut icon" href="static/img/search.svg" type="image/x-icon">
   <!-- css 文件 -->
   <link rel="stylesheet" href="static/css/foundation.min.css">
@@ -58,6 +58,14 @@
         width: 100%;
       }
 
+      .new-search-input {
+        display: flex;
+        border: 1px solid red !important;
+        padding: 4px;
+        border-radius: 16px !important;
+        width: 100%;
+      }
+
       .layui-card-header .search-hearch .s2 .search-input i {
         flex: 1;
       }
@@ -80,6 +88,12 @@
       .layui-card-header .search-hearch .s3 .user-dropdown {
         flex: 1;
       }
+
+      /* .layui-panel>ol>hr:nth-last-child(-n+1),
+      .layui-panel>ol>br:nth-last-child(-n+1) {
+        display: none;
+        visibility: hidden;
+      } */
     }
   </style>
 </head>
@@ -93,7 +107,8 @@
           <div class="s2">
             <div class="search-input">
               <i class="layui-icon layui-icon-search"></i>
-              <input id="keyword" type="text" placeholder="你知道的,一切为了检索。">
+              <!-- 动态渲染输入框值 -->
+              <input id="keyword" type="text" value="{[{.keyword}]}" autocomplete="off" placeholder="你知道的,一切为了检索。">
             </div>
           </div>
           <div class="s3">
@@ -104,10 +119,26 @@
           </div>
         </div>
       </div>
-      <div class="layui-card-body">
-        <div class="">
-          卡片式面板面板通常用于非白色背景色的主体内<br>
-          从而映衬出边框投影
+      <div class="layui-card-body large-6">
+        <div>
+          <ol>
+            {[{$length := len .resp.Hits }]}
+            {[{$length = subtractionOne $length}]}
+            {[{range $key,$value := .resp.Hits}]}
+            <li class="layui-panel">
+              <div style="padding: 30px;">
+                {[{$key}]} :{[{$value}]}
+              </div>
+            </li>
+            {[{/**解决最后两个多余hr br问题**/}]}
+
+            {[{if eq $length $key }]}
+            {[{else}]}
+            <br>
+            {[{end}]}
+            {[{end}]}
+          </ol>
+
         </div>
       </div>
     </div>
@@ -135,7 +166,29 @@
         }
       });
     })
-
+    //输入框
+    $("#keyword").focus(function (e) {
+      // 输入框获取焦点
+      $(".search-input")[0].setAttribute("style",
+        //增加阴影
+        'box-shadow:' + "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
+      )
+      document.onkeydown = function (e) {
+        var ev = document.all ? window.event : e;
+        if (ev.keyCode == 13) {
+          var keyword = $("#keyword").val();
+          console.log(keyword)
+          //跳转
+          window.location = "/search?q=" + keyword;
+        }
+      }
+    }).blur(function () {
+      // 输入框失去焦点
+      $(".search-input")[0].setAttribute("style",
+        //取消阴影
+        'box-shadow:' + ";"
+      )
+    });
   </script>
 </body>
 

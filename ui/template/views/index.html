@@ -49,12 +49,13 @@
         <li><a>关于</a></li>
     </ul>
     <div class="center">
-        <form>
+        <form onsubmit="return false;">
             <div class="row">
                 <div class="large-10 columns">
-                    <div class="row collapse postfix-round">
-                        <div class="small-11 columns">
-                            <input id="keyword" type="text" placeholder="你知道的,一切为了检索。">
+                    <div class="row collapse postfix-round ">
+                        <div class="small-11 columns ">
+                            <input class="select-input" id="keyword" type="text" autocomplete="off"
+                                placeholder="你知道的,一切为了检索。">
                         </div>
                         <div class="small-1 columns">
                             <a id="go-search" class="button postfix info">{[{.value}]}</a>
@@ -66,17 +67,15 @@
     </div>
 
     <script>
-        $(document).ready(function () {
-            $(document).foundation();
-        })
         //随机背景图  通过模板引擎渲染
         document.body.style.background = "url(" + "{[{.imgUrl}]}" + ") no-repeat";
         //背景图占满
         document.body.style.backgroundSize = "100% 100%"
+        //跳转搜索页面
 
         //监听点击事件
         $("#go-search").click(
-            function () {
+            function toSearch() {
                 var keyword = $("#keyword").val();
 
                 console.log(keyword)
@@ -84,7 +83,30 @@
                 window.location = "/search?q=" + keyword;
             }
         );
-
+        //输入框
+        $("#keyword").focus(function (e) {
+            // 输入框获取焦点
+            $(".select-input")[0].setAttribute("style",
+                //增加阴影
+                'box-shadow:' + "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
+            )
+            document.onkeydown = function (e) {
+                var ev = document.all ? window.event : e;
+                if (ev.keyCode == 13) {
+                    var keyword = $("#keyword").val();
+                    console.log(keyword)
+                    //跳转
+                    window.location = "/search?q=" + keyword;
+                }
+            }
+        }).blur(function () {
+            // 输入框失去焦点
+            $(".select-input")[0].setAttribute("style",
+                //取消阴影
+                'box-shadow:' + ";"
+            )
+        });
+        //语法说明
         $('#grammar').on('click', function () {
             layer.open({
                 type: 1,

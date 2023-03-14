@@ -22,13 +22,16 @@ func ViewIndex(c context.Context, ctx *app.RequestContext) {
 // search.html
 func ViewSearch(c context.Context, ctx *app.RequestContext) {
 	//查询
-	keyword := ctx.Query("q")	
+	keyword := ctx.Query("q")
 
-	resp := myutils.Search("test", keyword, meilisearch.SearchRequest{})
-
+	resp := myutils.Search("movies", keyword, meilisearch.SearchRequest{
+		Offset: 0,
+		Limit:  10,
+	})
 	log.Println("keyword is :\t" + keyword)
+	log.Printf("resp.Hits is :%#v \n", resp.Hits)
 	ctx.HTML(http.StatusOK, "search.html", utils.H{
-		"title": keyword,
-		"resp":  resp,
+		"keyword": keyword,
+		"resp":    resp,
 	})
 }
