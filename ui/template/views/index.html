@@ -67,6 +67,9 @@
     </div>
 
     <script>
+        $(document).ready(function () {
+            $(document).foundation();
+        })
         //随机背景图  通过模板引擎渲染
         document.body.style.background = "url(" + "{[{.imgUrl}]}" + ") no-repeat";
         //背景图占满
@@ -122,17 +125,24 @@
                 // offset: 't', //中上展示
                 closeBtn: 0,
                 id: 'grammar',
-                anim: 1,
+                anim: 6,
                 moveType: 1,
                 btnAlign: 'c',
                 shade: 0.8,
                 move: false,
+                scrollbar: false,
                 success: function (layero) {
                     var btn = layero.find('.layui-layer-btn');
                     btn.find('.layui-layer-btn0').attr({
+                        //去google网页
                         href: 'https://sites.google.com/view/togetherlearning/learn/digitalliteracy/powersearching'
                         , target: '_blank'
                     });
+                    btn.find('.layui-layer-btn1').click(
+                        function () {
+                            layer.msg('快去试试吧！');
+                        }
+                    );
                 }
             })
         })

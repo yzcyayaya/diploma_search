@@ -29,7 +29,6 @@ func ViewSearch(c context.Context, ctx *app.RequestContext) {
 		Limit:  10,
 	})
 	log.Println("keyword is :\t" + keyword)
-	log.Printf("resp.Hits is :%#v \n", resp.Hits)
 	ctx.HTML(http.StatusOK, "search.html", utils.H{
 		"keyword": keyword,
 		"resp":    resp,
