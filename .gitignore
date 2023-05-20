@@ -35,4 +35,8 @@ _testmain.go
 /.tmp
 *.local.yml
 dumped_hertz_remote_config.json
-		  
+.fresh.yaml
+/data.ms/**
+/dumps/*
+# 生成数据不提交
+/biz/data/*_data.json

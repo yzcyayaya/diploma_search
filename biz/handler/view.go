@@ -25,7 +25,7 @@ func ViewSearch(c context.Context, ctx *app.RequestContext) {
 	//查询
 	keyword := ctx.Query("q")
 
-	resp := myutils.Search("movies", keyword, meilisearch.SearchRequest{
+	resp := myutils.Search("diploma_search", keyword, meilisearch.SearchRequest{
 		Offset: 0,
 		Limit:  10,
 	})

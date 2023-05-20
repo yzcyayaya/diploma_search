@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/cloudwego/hertz v0.6.0
+	github.com/google/uuid v1.3.0
 	github.com/meilisearch/meilisearch-go v0.23.0
 	gopkg.in/yaml.v3 v3.0.1
 )
