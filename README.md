@@ -37,3 +37,8 @@ node dataRules.js --count {number}
 先生成mock数据，因为`biz/data/init.go`会导入数据到`meilsearch`进去.
 
 所以默认需要生成`biz/data/mock_data.json`该文件。
+
+> meilisearch-windows-amd64.exe  --max-indexing-memory 499998720
+
+读取json加入到meilisearch中
+go test .\biz\utils\meili_test.go --run=TestInitPerson -v

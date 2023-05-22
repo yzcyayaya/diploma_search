@@ -42,19 +42,14 @@ func Search(index string, keyword string, searchRequest meilisearch.SearchReques
 
 // 增加文档
 func AddDoc[T model.Person](index string, data []T) *meilisearch.TaskInfo {
-	// 改接口有问题，需要改成纯json对象形式
-	// log.Println("index : \t", doc.GetIndex(), "title:\t", doc.GetTitle())
-	// newdoc, err := json.Marshal(&document{
-	// 	Id:     doc.GetDocId(),
-	// 	Title:  doc.GetTitle(),
-	// 	Genres: doc.GetGenres(),
-	// 	Data:   data,
-	// })
-	// fmt.Println(string(newdoc))
-	// if err != nil {
-	// 	log.Println("json marshal error !!")
-	// }
 	//创建文档
+	_, err := client.CreateIndex(&meilisearch.IndexConfig{
+		Uid:        index,
+		PrimaryKey: "id",
+	})
+	if err != nil {
+		log.Println("index already existing !!")
+	}
 	resp, err := client.Index(index).AddDocuments(data)
 	if err != nil {
 		log.Println("add document error !!")

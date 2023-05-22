@@ -4,9 +4,6 @@ package main
 
 import (
 	"diploma_search/biz/config"
-	"diploma_search/biz/data"
-	"diploma_search/biz/utils"
-	"fmt"
 
 	"html/template"
 
@@ -34,8 +31,6 @@ func main() {
 	h.LoadHTMLGlob("ui/template/views/**")
 	//静态文件加载
 	h.Static("static", "ui/template")
-	resp := utils.AddDoc("diploma_search", data.Persons)
-	fmt.Println(resp)
 	register(h)
 	h.Spin()
 

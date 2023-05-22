@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	Persons []model.Person
+	Persons  []model.Person
 )
 
 //go:embed mock_data.json

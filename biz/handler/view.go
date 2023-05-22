@@ -14,7 +14,7 @@ import (
 
 func ViewIndex(c context.Context, ctx *app.RequestContext) {
 	ctx.HTML(http.StatusOK, "index.html", utils.H{
-		"value":  "Go",
+		"value": "Go",
 		//随机图
 		"imgUrl": "https://random.m2dd.top",
 	})

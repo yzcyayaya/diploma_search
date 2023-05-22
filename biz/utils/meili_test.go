@@ -22,10 +22,7 @@ func TestCreateDoc(t *testing.T) {
 
 	index := C.Index("movies")
 	documents := []map[string]interface{}{
-		{
-			"id":     1,
-			"title":  "Carol",
-			"genres": []string{"Romance", "Drama"}},
+		{"id": 1, "title": "Carol", "genres": []string{"Romance", "Drama"}},
 		{"id": 2, "title": "Wonder Woman", "genres": []string{"Action", "Adventure"}},
 		{"id": 3, "title": "Life of Pi", "genres": []string{"Adventure", "Drama"}},
 		{"id": 4, "title": "Mad Max: Fury Road", "genres": []string{"Adventure", "Science Fiction"}},
@@ -42,8 +39,13 @@ func TestCreateDoc(t *testing.T) {
 }
 
 func TestInitPerson(t *testing.T) {
-	resp := AddDoc("diploma_search", data.Persons)
-	fmt.Println(resp.Status)
+	_, _ = C.CreateIndex(
+		&meilisearch.IndexConfig{
+			Uid:        "diploma_search",
+			PrimaryKey: "id",
+		},
+	)
+	C.Index("diploma_search").AddDocuments(data.Persons)
 }
 
 func TestSearch(t *testing.T) {

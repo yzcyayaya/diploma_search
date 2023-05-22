@@ -10,6 +10,9 @@ let genresRules = ["踏实", "实事求", "条理分明", "理解力强", "善�
 let professionalRules = ["医生", "老师", "飞行员", "邮递员", "警察", "护士", "科学家", "美术家", "回家", "歌手", "办公室职员", "经理", "老板", "助手", "空姐", "海军", "工程师", "作家", "航海家", "空军", "陆军", "舞蹈家", "书法家", "模特", "护士", "导演", "演员", "服务员", "法官", "秘书", "话务员", "健身教练", "美容师", "程序员"];
 
 
+
+
+
 //获取--count参数的索引
 let index = process.argv.lastIndexOf("--count");
 //下一次则为要生成条数
@@ -17,6 +20,12 @@ let length = process.argv[index + 1]
 console.log("共生成：\t", length, "条数据，请核实确认。")
 
 for (i = 0; i < length; i++) {
+
+  const profilePhotoRules = '#' + Random.integer(180, 255).toString(16) +
+    Random.integer(140, 255).toString(16) +
+    Random.integer(120, 220).toString(16);
+
+
   // 人员数据生成规则
   let personRules = {
     "id": "@id",
@@ -34,6 +43,10 @@ for (i = 0; i < length; i++) {
     "motto": "@csentence(5)",
     "genres": Random.pick(genresRules, 2, 4),
     "professional": Random.pick(professionalRules, 1),
+    "poster": function () {
+      let name = this.user_name;
+      return Random.image('240x260', profilePhotoRules, name);
+    },
     "title": function () {
       //标题为一些混合
       let title = this.user_name + "," + this.professional + "," + this.genres;

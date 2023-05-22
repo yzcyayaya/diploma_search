@@ -15,5 +15,6 @@ type Person struct {
 	Motto        string   `json:"motto"`
 	Genres       []string `json:"genres"`
 	Professional string   `json:"professional"`
+	ProfilePhoto string   `json:"poster"`
 	Title        string   `json:"title"`
 }
