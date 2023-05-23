@@ -1,0 +1,32 @@
+syntax = "proto3";
+ 
+option go_package=".;rpc;";
+
+
+message PersonResponse{
+  string Id = 1;
+  string Guid =2;
+  string UserName = 3;
+  string Mobile = 4;
+  string Address = 5;
+  string Brthday = 6;
+  string Email = 7;
+  string Weight = 8;
+  float Height = 9;
+  float Gender = 10;
+  string Introduce = 11;
+  string Motto = 12;
+  repeated string Genres = 13;
+  string Professional = 14;
+  string ProfilePhoto = 15;
+  string Title = 16;
+ }
+
+ message PersonRequest{
+  string KeyWord = 1;
+ }
+
+
+service Person{
+  rpc GetPersons(PersonRequest) returns (PersonResponse){}
+}
