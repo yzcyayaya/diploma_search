@@ -21,12 +21,15 @@ message PersonResponse{
   string ProfilePhoto = 15;
   string Title = 16;
  }
-
+message PesonList{
+  repeated PersonResponse PersonList = 1;
+}
  message PersonRequest{
-  string KeyWord = 1;
+  string Index = 1;
+  string KeyWord = 2;
  }
 
 
 service Person{
-  rpc GetPersons(PersonRequest) returns (PersonResponse){}
+  rpc GetPersons(PersonRequest) returns (PesonList){}
 }

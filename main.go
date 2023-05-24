@@ -3,6 +3,7 @@
 package main
 
 import (
+	"diploma_search/biz/client"
 	"diploma_search/biz/config"
 
 	"html/template"
@@ -16,6 +17,8 @@ func subtractionOne(num int) int {
 }
 
 func main() {
+	// 延迟关闭GRPC连接
+	defer client.Conn.Close()
 	h := server.Default(
 		//读取配置文件端口
 		server.WithHostPorts("localhost:"+config.C.Server.Port),

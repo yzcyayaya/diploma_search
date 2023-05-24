@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PersonClient interface {
-	GetPersons(ctx context.Context, in *PersonRequest, opts ...grpc.CallOption) (*PersonResponse, error)
+	GetPersons(ctx context.Context, in *PersonRequest, opts ...grpc.CallOption) (*PesonList, error)
 }
 
 type personClient struct {
@@ -33,8 +33,8 @@ func NewPersonClient(cc grpc.ClientConnInterface) PersonClient {
 	return &personClient{cc}
 }
 
-func (c *personClient) GetPersons(ctx context.Context, in *PersonRequest, opts ...grpc.CallOption) (*PersonResponse, error) {
-	out := new(PersonResponse)
+func (c *personClient) GetPersons(ctx context.Context, in *PersonRequest, opts ...grpc.CallOption) (*PesonList, error) {
+	out := new(PesonList)
 	err := c.cc.Invoke(ctx, "/Person/GetPersons", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (c *personClient) GetPersons(ctx context.Context, in *PersonRequest, opts .
 // All implementations must embed UnimplementedPersonServer
 // for forward compatibility
 type PersonServer interface {
-	GetPersons(context.Context, *PersonRequest) (*PersonResponse, error)
+	GetPersons(context.Context, *PersonRequest) (*PesonList, error)
 	mustEmbedUnimplementedPersonServer()
 }
 
@@ -54,7 +54,7 @@ type PersonServer interface {
 type UnimplementedPersonServer struct {
 }
 
-func (UnimplementedPersonServer) GetPersons(context.Context, *PersonRequest) (*PersonResponse, error) {
+func (UnimplementedPersonServer) GetPersons(context.Context, *PersonRequest) (*PesonList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPersons not implemented")
 }
 func (UnimplementedPersonServer) mustEmbedUnimplementedPersonServer() {}
