@@ -122,7 +122,8 @@
       <div class="layui-card-body large-6">
         <div>
           <ol>
-            {[{$length := len .resp.Hits }]}
+
+            {[{$length := len .resp.Hits}]}
             {[{$length = subtractionOne $length}]}
             {[{range $key,$value := .resp.Hits}]}
             <li class="layui-panel">

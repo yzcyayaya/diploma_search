@@ -1,7 +1,9 @@
 syntax = "proto3";
- 
-option go_package=".;rpc;";
 
+// import "/struct.proto";
+// import "google/protobuf/any.proto";
+
+option go_package=".;rpc;";
 
 message PersonResponse{
   string Id = 1;
@@ -11,9 +13,9 @@ message PersonResponse{
   string Address = 5;
   string Brthday = 6;
   string Email = 7;
-  string Weight = 8;
+  float Weight = 8;
   float Height = 9;
-  float Gender = 10;
+  string Gender = 10;
   string Introduce = 11;
   string Motto = 12;
   repeated string Genres = 13;
@@ -21,8 +23,11 @@ message PersonResponse{
   string ProfilePhoto = 15;
   string Title = 16;
  }
-message PesonList{
-  repeated PersonResponse PersonList = 1;
+// message PersonList{
+//   repeated PersonResponse PersonList = 1;
+// }
+message PersonList{
+ bytes  PersonList = 1;
 }
  message PersonRequest{
   string Index = 1;
@@ -31,5 +36,5 @@ message PesonList{
 
 
 service Person{
-  rpc GetPersons(PersonRequest) returns (PesonList){}
+  rpc GetPersons(PersonRequest) returns (PersonList){}
 }

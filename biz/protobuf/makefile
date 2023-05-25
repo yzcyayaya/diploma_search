@@ -3,9 +3,14 @@ client-codegen:
 	--go-grpc_out=../client/rpc  --go-grpc_opt=paths=source_relative \
 	person.proto 
 server-codegen:
-	protoc --go_out=../server/rpc --go_opt=paths=source_relative \
-	--go-grpc_out=../server/rpc  --go-grpc_opt=paths=source_relative \
-	person.proto 
+	protoc -I /usr/local/GoCode/src -I . \
+	--go_out=../server/rpc --go_opt=paths=source_relative  \
+  --go-grpc_out=../server/rpc --go-grpc_opt=paths=source_relative  \
+	*.proto
+
+# protoc -I /usr/local/GoCode/src --go_out=../server/rpc --go_opt=paths=source_relative \
+# 	--go-grpc_out=../server/rpc  --go-grpc_opt=paths=source_relative \
+# 	*.proto 
 # client-codegen server-codegen
 code-gen: server-codegen
 	@echo "生成sever client代码成功" 
