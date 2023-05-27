@@ -35,26 +35,32 @@ func ViewSearch(c context.Context, ctx *app.RequestContext) {
 			"imgUrl": "https://random.m2dd.top",
 		})
 	}
-	// gprc调用 ===>>>解码有问题
+	// gprc调用
 	resp, err := client.C.GetPersons(c, &rpc.PersonRequest{
 		Index:   "diploma_search",
 		KeyWord: keyword,
 	})
-	log.Println("resp : ", resp.PersonList)
+	log.Println("resp : ", string(resp.PersonList))
 	if err != nil {
 		log.Panicln("call grpc is error", err)
 	}
 	personList := struct {
-		PersonList *meilisearch.SearchResponse
+		PersonList *meilisearch.SearchResponse `json:"PersonList"`
 	}{
 		PersonList: &meilisearch.SearchResponse{},
 	}
-	json.Unmarshal(resp.PersonList, &personList)
+
+	searchResp := new(meilisearch.SearchResponse)
+
+	json.Unmarshal(resp.PersonList, searchResp)
+
+	// log.Println("unmarshal--->", searchResp.Hits)
+
 	log.Println("keyword is :\t" + keyword)
 
-	log.Println("resp : ", &personList)
+	log.Println("resp : ", personList)
 	ctx.HTML(http.StatusOK, "search.html", utils.H{
 		"keyword": keyword,
-		"resp":    personList.PersonList,
+		"resp":    searchResp,
 	})
 }
