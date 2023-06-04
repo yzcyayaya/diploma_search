@@ -14,7 +14,8 @@ var C *meilisearch.Client
 
 func init() {
 	C = meilisearch.NewClient(meilisearch.ClientConfig{
-		Host:   "http://127.0.0.1:7700",
+		// Host:   "http://127.0.0.1:7700",
+		Host: "http://192.168.56.102:30935",
 		APIKey: "masterKey",
 	})
 }

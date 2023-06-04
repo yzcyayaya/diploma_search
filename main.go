@@ -21,7 +21,7 @@ func main() {
 	defer client.Conn.Close()
 	h := server.Default(
 		//读取配置文件端口
-		server.WithHostPorts("localhost:"+config.C.Server.Port),
+		server.WithHostPorts(config.C.Server.Host+":"+config.C.Server.Port),
 		server.WithMaxRequestBodySize(20<<20),
 		server.WithTransport(standard.NewTransporter),
 	)

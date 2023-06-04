@@ -18,7 +18,7 @@ func (*Person) GetPersons(ctx context.Context, in *rpc.PersonRequest) (*rpc.Pers
 	//结果为hits里面的interface{}数组
 	resp := utils.Search(in.Index, in.KeyWord, meilisearch.SearchRequest{
 		Offset: 0,
-		Limit:  10,
+		Limit:  1000,
 	})
 	log.Println("grpc server call meilisearch ! ")
 	data, err := json.Marshal(resp)

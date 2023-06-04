@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"diploma_search/biz/client"
+	"diploma_search/biz/model"
 	"diploma_search/biz/server/rpc"
 	"encoding/json"
 	"log"
@@ -40,27 +41,26 @@ func ViewSearch(c context.Context, ctx *app.RequestContext) {
 		Index:   "diploma_search",
 		KeyWord: keyword,
 	})
-	log.Println("resp : ", string(resp.PersonList))
+	// log.Println("resp : ", string(resp.PersonList))
 	if err != nil {
 		log.Panicln("call grpc is error", err)
 	}
-	personList := struct {
-		PersonList *meilisearch.SearchResponse `json:"PersonList"`
-	}{
-		PersonList: &meilisearch.SearchResponse{},
-	}
-
+	//gpc解析
 	searchResp := new(meilisearch.SearchResponse)
-
+	//解析数组
 	json.Unmarshal(resp.PersonList, searchResp)
 
 	// log.Println("unmarshal--->", searchResp.Hits)
 
 	log.Println("keyword is :\t" + keyword)
 
-	log.Println("resp : ", personList)
+	data, _ := json.Marshal(searchResp.Hits)
+	viewData := string(data)
+	var personList []model.Person
+	json.Unmarshal(data, &personList)
+	// fmt.Println("测试 ：", personList)
 	ctx.HTML(http.StatusOK, "search.html", utils.H{
-		"keyword": keyword,
-		"resp":    searchResp,
+		"keyword":  keyword,
+		"viewData": viewData,
 	})
 }

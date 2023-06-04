@@ -41,4 +41,4 @@ node dataRules.js --count {number}
 > meilisearch-windows-amd64.exe  --max-indexing-memory 499998720
 
 读取json加入到meilisearch中
-go test .\biz\utils\meili_test.go --run=TestInitPerson -v
+go test ./biz/utils/meili_test.go --run=TestInitPerson -v

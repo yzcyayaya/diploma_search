@@ -121,31 +121,56 @@
       </div>
       <div class="layui-card-body large-6">
         <div>
-          <ol>
-
-            {[{$length := len .resp.Hits}]}
-            {[{$length = subtractionOne $length}]}
-            {[{range $key,$value := .resp.Hits}]}
-            <li class="layui-panel">
+          <ol id="searchItem" style="height: 750px;">
+            <!-- <li class="layui-panel">
               <div style="padding: 30px;">
-                {[{$key}]} :{[{$value}]}
+
               </div>
             </li>
-            {[{/**解决最后两个多余hr br问题**/}]}
 
-            {[{if eq $length $key }]}
-            {[{else}]}
-            <br>
-            {[{end}]}
-            {[{end}]}
+            <br> -->
           </ol>
-
         </div>
       </div>
+      <div style="display: flex;justify-content: center;" id="demo-laypage-normal-1"></div>
     </div>
   </div>
   <script>
     layui.use(['dropdown', 'util', 'layer', 'table'], function () {
+      //分页
+      var laypage = layui.laypage;
+
+      // var data = "{[{.resp}]}";
+      var data = "{[{.viewData}]}";
+      let dataList = JSON.parse(data)
+      console.log(dataList)
+      // 普通用法
+      laypage.render({
+        elem: 'demo-laypage-normal-1',
+        count: dataList.length, // 数据总数
+        limit: 3,
+        jump: function (obj, first) {
+          console.log(obj.curr); // 得到当前页，以便向服务端请求对应页的数据。
+          console.log(obj.limit); // 得到每页显示的条数
+          //切割数组
+          let viewList = dataList.slice((obj.curr - 1) * obj.limit, obj.curr * obj.limit);
+
+          let htmlText = "";
+          for (let item of viewList) {
+            console.log(item);
+            htmlText += '<li class="layui-panel">' +
+              '<div style="padding: 30px;">' + "data : " + Object.values(item) + '</div>' +
+              '</li>' + '<br>'
+          }
+
+          $("#searchItem")[0].innerHTML = htmlText
+          console.log($("#searchItem")[0].innerHTML)
+          // 首次不执行
+          if (!first) {
+            // do something
+          }
+        }
+      });
       var dropdown = layui.dropdown
         , util = layui.util
         , layer = layui.layer

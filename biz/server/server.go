@@ -13,12 +13,12 @@ import (
 )
 
 func main() {
-	var prot int
+	var port int
 	//命令行接收prot
-	flag.IntVar(&prot, "port", 9110, "help message for port")
+	flag.IntVar(&port, "port", 9110, "help message for port")
 	flag.Parse()
 
-	lis, err := net.Listen("tcp", "127.0.0.1:"+strconv.Itoa(prot))
+	lis, err := net.Listen("tcp", "0.0.0.0:"+strconv.Itoa(port))
 
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -32,7 +32,7 @@ func main() {
 	// 往grpc服务端注册反射服务
 	reflection.Register(s)
 
-	log.Println("grpc sever success: 127.0.0.1:" + strconv.Itoa(prot))
+	log.Println("grpc sever success: 0.0.0.0:" + strconv.Itoa(port))
 
 	// 启动grpc服务
 	if err := s.Serve(lis); err != nil {

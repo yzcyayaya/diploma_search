@@ -20,6 +20,7 @@ type Config struct {
 type Server struct {
 	Port string `yaml:"port"`
 	Name string `yaml:"name"`
+	Host string `yaml:"host"`
 }
 
 type Meilisearch struct {

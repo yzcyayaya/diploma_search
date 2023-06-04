@@ -1,10 +1,6 @@
 syntax = "proto3";
 
-// import "/struct.proto";
-// import "google/protobuf/any.proto";
-
 option go_package=".;rpc;";
-
 message PersonResponse{
   string Id = 1;
   string Guid =2;
@@ -23,9 +19,6 @@ message PersonResponse{
   string ProfilePhoto = 15;
   string Title = 16;
  }
-// message PersonList{
-//   repeated PersonResponse PersonList = 1;
-// }
 message PersonList{
  bytes  PersonList = 1;
 }

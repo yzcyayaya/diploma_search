@@ -3,6 +3,7 @@ package utils
 import (
 	"diploma_search/biz/config"
 	"diploma_search/biz/model"
+	"flag"
 	"log"
 
 	"github.com/meilisearch/meilisearch-go"
@@ -16,19 +17,25 @@ import (
 // 	Data   interface{} `json:"data"`
 // }
 
-var client *meilisearch.Client
+var (
+	client  *meilisearch.Client
+	hostUrl string
+)
 
 func init() {
+	//没有flage则从yaml读取meili配置
+	flag.StringVar(&hostUrl, "meili_url", config.C.Meilisearch.Host+":"+config.C.Meilisearch.Port, "meilisearch: meilisearch:7700")
+	flag.Parse()
 	client = meilisearch.NewClient(meilisearch.ClientConfig{
-		//从yaml读取meili配置
-		Host:   "http://" + config.C.Meilisearch.Host + ":" + config.C.Meilisearch.Port,
+
+		Host:   "http://" + hostUrl,
 		APIKey: config.C.Meilisearch.Apikey,
 	})
 	version, err := client.GetVersion()
 	if err != nil {
 		log.Fatalln("! ! ! connect error ,place check you the environment.")
 	}
-	log.Println("connect success , meilisearch version :", version.PkgVersion)
+	log.Println("connect success :"+hostUrl+", meilisearch version :", version.PkgVersion)
 }
 
 // 搜索

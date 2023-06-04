@@ -1,0 +1,29 @@
+FROM golang:alpine as build
+
+LABEL name="yzcyayaya" email="ylzlcl@163.com" 
+
+# 设置环境变量
+ENV GO111MODULE=on \
+  CGO_ENABLED=0 \
+  GOOS=linux \
+  GOARCH=amd64 \
+  GOPROXY="https://goproxy.cn,direct"
+
+WORKDIR /go/release
+
+ADD . .
+# 编译
+RUN go build -ldflags="-s -w" -installsuffix cgo -o grpc_server ./biz/server/server.go
+
+# 运行：使用scratch作为基础镜像
+FROM scratch as prod
+
+# 在build阶段复制可执行的go二进制文件app
+COPY --from=build /go/release/grpc_server /
+
+EXPOSE 9110
+
+# 启动服务
+# meili_url
+
+ENTRYPOINT ["/grpc_server" ]
